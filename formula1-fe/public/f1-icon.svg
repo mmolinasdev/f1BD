@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" fill="#15151E"/>
+  <!-- F -->
+  <rect x="4" y="5" width="11" height="3" fill="#E10600"/>
+  <rect x="4" y="5" width="3" height="19" fill="#E10600"/>
+  <rect x="4" y="12" width="9" height="3" fill="#E10600"/>
+  <!-- 1 -->
+  <rect x="20" y="5" width="3" height="19" fill="#E10600"/>
+  <rect x="16" y="7" width="4" height="3" fill="#E10600"/>
+  <rect x="15" y="22" width="11" height="2" fill="#E10600"/>
+  <!-- Bottom speed line -->
+  <rect x="4" y="27" width="24" height="1" fill="#E10600" opacity="0.4"/>
+</svg>

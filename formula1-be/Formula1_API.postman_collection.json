@@ -1,0 +1,500 @@
+{
+  "info": {
+    "name": "Formula 1 API",
+    "description": "Colección CRUD completa para el Sistema de Estadísticas Formula 1\nBase URL: http://localhost:8080/api\n\nEntidades:\n- Pilotos\n- Escuderías\n- Temporadas\n- Circuitos\n- Grandes Premios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Pilotos",
+      "description": "CRUD para la entidad PILOTO. La PK es compuesta (tipoDocumento + numDocumento).",
+      "item": [
+        {
+          "name": "GET - Listar todos los pilotos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pilotos?page=0&size=20&search=",
+              "host": ["{{baseUrl}}"],
+              "path": ["pilotos"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "20" },
+                { "key": "search", "value": "", "description": "Filtrar por nombre, apellidos o alias" }
+              ]
+            },
+            "description": "Retorna lista paginada de pilotos. Parámetros opcionales: page, size, search."
+          }
+        },
+        {
+          "name": "GET - Obtener piloto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pilotos/PASAPORTE/NL-VER-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["pilotos", "PASAPORTE", "NL-VER-001"]
+            },
+            "description": "Obtener un piloto por su tipo de documento y número de documento.\nEjemplos de IDs del seed:\n- PASAPORTE / NL-VER-001  (Max Verstappen)\n- PASAPORTE / ES-ALO-001  (Fernando Alonso)\n- PASAPORTE / GB-HAM-001  (Lewis Hamilton)\n- PASAPORTE / MX-PER-001  (Sergio Pérez)"
+          }
+        },
+        {
+          "name": "POST - Crear piloto",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoDocumento\": \"PASAPORTE\",\n  \"numDocumento\": \"AU-RIC-001\",\n  \"nombre\": \"Daniel\",\n  \"apellidos\": \"Ricciardo\",\n  \"nacionalidad\": \"Australiana\",\n  \"fechaNacimiento\": \"1989-07-01\",\n  \"alias\": \"RIC\",\n  \"numParrillaPermanente\": 3,\n  \"urlFoto\": null,\n  \"estado\": \"ACTIVO\",\n  \"temporadaRetiro\": null,\n  \"escuderiaId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pilotos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pilotos"]
+            },
+            "description": "Crear un nuevo piloto. Se crea también la Persona asociada.\nCampos obligatorios: tipoDocumento, numDocumento, nombre, apellidos.\nEstados válidos: ACTIVO, RETIRADO, SUSPENDIDO, INACTIVO."
+          }
+        },
+        {
+          "name": "PUT - Actualizar piloto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoDocumento\": \"PASAPORTE\",\n  \"numDocumento\": \"NL-VER-001\",\n  \"nombre\": \"Max\",\n  \"apellidos\": \"Verstappen\",\n  \"nacionalidad\": \"Neerlandesa\",\n  \"fechaNacimiento\": \"1997-09-30\",\n  \"alias\": \"MAX\",\n  \"numParrillaPermanente\": 1,\n  \"urlFoto\": null,\n  \"estado\": \"ACTIVO\",\n  \"temporadaRetiro\": null,\n  \"escuderiaId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pilotos/PASAPORTE/NL-VER-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["pilotos", "PASAPORTE", "NL-VER-001"]
+            },
+            "description": "Actualizar datos de un piloto existente."
+          }
+        },
+        {
+          "name": "DELETE - Eliminar piloto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pilotos/PASAPORTE/AU-RIC-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["pilotos", "PASAPORTE", "AU-RIC-001"]
+            },
+            "description": "Eliminar un piloto por tipo y número de documento."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Escuderías",
+      "description": "CRUD para la entidad ESCUDERIA. La PK es id_equipo (auto).",
+      "item": [
+        {
+          "name": "GET - Listar todas las escuderías",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/escuderias?page=0&size=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["escuderias"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "20" }
+              ]
+            },
+            "description": "Retorna lista paginada de escuderías activas."
+          }
+        },
+        {
+          "name": "GET - Obtener escudería por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/escuderias/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["escuderias", "1"]
+            },
+            "description": "Obtener una escudería por su ID.\nIDs del seed:\n1 = Red Bull Racing\n2 = Mercedes-AMG\n3 = Scuderia Ferrari\n4 = McLaren\n5 = Aston Martin"
+          }
+        },
+        {
+          "name": "POST - Crear escudería",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreOficial\": \"Haas F1 Team\",\n  \"codigo\": \"HAS\",\n  \"nacionalidad\": \"Estadounidense\",\n  \"estado\": \"ACTIVO\",\n  \"paisSede\": \"Estados Unidos\",\n  \"ciudadSede\": \"Kannapolis\",\n  \"urlFoto\": null\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/escuderias",
+              "host": ["{{baseUrl}}"],
+              "path": ["escuderias"]
+            },
+            "description": "Crear una nueva escudería.\nEstados válidos: ACTIVO, INACTIVO, RETIRADO."
+          }
+        },
+        {
+          "name": "PUT - Actualizar escudería",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreOficial\": \"Oracle Red Bull Racing\",\n  \"codigo\": \"RBR\",\n  \"nacionalidad\": \"Austriaca\",\n  \"estado\": \"ACTIVO\",\n  \"paisSede\": \"Reino Unido\",\n  \"ciudadSede\": \"Milton Keynes\",\n  \"urlFoto\": \"https://static.formula1.com/escuderias/red_bull_2024.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/escuderias/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["escuderias", "1"]
+            },
+            "description": "Actualizar datos de una escudería existente."
+          }
+        },
+        {
+          "name": "DELETE - Eliminar escudería",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/escuderias/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["escuderias", "1"]
+            },
+            "description": "Eliminar una escudería. Fallará si tiene contratos asociados."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Temporadas",
+      "description": "CRUD para la entidad TEMPORADA. Incluye endpoints de clasificación y GPs.",
+      "item": [
+        {
+          "name": "GET - Listar todas las temporadas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/temporadas",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas"]
+            },
+            "description": "Retorna todas las temporadas ordenadas por año descendente."
+          }
+        },
+        {
+          "name": "GET - Obtener temporada por año",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/temporadas/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas", "2023"]
+            },
+            "description": "Obtener una temporada por su año. El seed incluye la temporada 2023."
+          }
+        },
+        {
+          "name": "GET - Clasificación de pilotos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/temporadas/2023/clasificacion/pilotos",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas", "2023", "clasificacion", "pilotos"]
+            },
+            "description": "Retorna el campeonato de pilotos de la temporada indicada, ordenado por posición."
+          }
+        },
+        {
+          "name": "GET - Clasificación de constructores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/temporadas/2023/clasificacion/constructores",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas", "2023", "clasificacion", "constructores"]
+            },
+            "description": "Retorna el campeonato de constructores de la temporada indicada, ordenado por posición."
+          }
+        },
+        {
+          "name": "GET - GPs de una temporada",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/temporadas/2023/gps?page=0&size=25",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas", "2023", "gps"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "25" }
+              ]
+            },
+            "description": "Retorna los Grandes Premios de una temporada paginados."
+          }
+        },
+        {
+          "name": "POST - Crear temporada",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"anio\": 2024,\n  \"estado\": \"FINALIZADA\",\n  \"numGps\": 24,\n  \"fechaInicio\": \"2024-03-02\",\n  \"fechaFin\": \"2024-12-08\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/temporadas",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas"]
+            },
+            "description": "Crear una nueva temporada.\nEstados válidos: PLANIFICADA, EN_CURSO, FINALIZADA."
+          }
+        },
+        {
+          "name": "PUT - Actualizar temporada",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"anio\": 2023,\n  \"estado\": \"FINALIZADA\",\n  \"numGps\": 22,\n  \"fechaInicio\": \"2023-03-05\",\n  \"fechaFin\": \"2023-11-26\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/temporadas/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas", "2023"]
+            },
+            "description": "Actualizar datos de una temporada existente."
+          }
+        },
+        {
+          "name": "DELETE - Eliminar temporada",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/temporadas/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["temporadas", "2023"]
+            },
+            "description": "Eliminar una temporada. Fallará si tiene GPs o reglas de puntuación asociadas."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Circuitos",
+      "description": "CRUD para la entidad CIRCUITO y sus variantes técnicas.",
+      "item": [
+        {
+          "name": "GET - Listar todos los circuitos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/circuitos?page=0&size=30",
+              "host": ["{{baseUrl}}"],
+              "path": ["circuitos"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "30" }
+              ]
+            },
+            "description": "Retorna lista paginada de circuitos con datos técnicos de su variante activa."
+          }
+        },
+        {
+          "name": "GET - Obtener circuito por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/circuitos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["circuitos", "1"]
+            },
+            "description": "Obtener un circuito por su ID.\nIDs del seed:\n1 = Bahrain International Circuit\n2 = Jeddah Corniche Circuit\n3 = Albert Park Circuit\n4 = Circuit de Monaco\n5 = Silverstone Circuit"
+          }
+        },
+        {
+          "name": "POST - Crear circuito",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreOficial\": \"Autodromo Nazionale di Monza\",\n  \"pais\": \"Italia\",\n  \"ciudad\": \"Monza\",\n  \"estado\": \"ACTIVO\",\n  \"longitudKm\": 5.793,\n  \"numCurvas\": 11,\n  \"sentido\": \"HORARIO\",\n  \"tipoCircuito\": \"PERMANENTE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/circuitos",
+              "host": ["{{baseUrl}}"],
+              "path": ["circuitos"]
+            },
+            "description": "Crear un nuevo circuito.\nEstados válidos: ACTIVO, INACTIVO, HISTORICO.\nSentido: HORARIO, ANTIHORARIO.\nTipo: PERMANENTE, CALLEJERO, MIXTO."
+          }
+        },
+        {
+          "name": "PUT - Actualizar circuito",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreOficial\": \"Bahrain International Circuit\",\n  \"pais\": \"Bahrein\",\n  \"ciudad\": \"Sakhir\",\n  \"estado\": \"ACTIVO\",\n  \"longitudKm\": 5.412,\n  \"numCurvas\": 15,\n  \"sentido\": \"HORARIO\",\n  \"tipoCircuito\": \"PERMANENTE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/circuitos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["circuitos", "1"]
+            },
+            "description": "Actualizar datos de un circuito existente."
+          }
+        },
+        {
+          "name": "DELETE - Eliminar circuito",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/circuitos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["circuitos", "1"]
+            },
+            "description": "Eliminar un circuito. Fallará si tiene variantes o GPs asociados."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grandes Premios",
+      "description": "CRUD para la entidad GRAN_PREMIO. Incluye resultados de carrera y clasificación.",
+      "item": [
+        {
+          "name": "GET - Obtener GP por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gps/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["gps", "1"]
+            },
+            "description": "Obtener un Gran Premio por su ID.\nIDs del seed:\n1 = GP Bahrain 2023 (ronda 1)\n2 = GP Arabia Saudí 2023 (ronda 2)\n3 = GP Australia 2023 (ronda 3)"
+          }
+        },
+        {
+          "name": "GET - Resultados de carrera de un GP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gps/1/resultados",
+              "host": ["{{baseUrl}}"],
+              "path": ["gps", "1", "resultados"]
+            },
+            "description": "Retorna los resultados de la sesión CARRERA del Gran Premio indicado, ordenados por posición final."
+          }
+        },
+        {
+          "name": "GET - Resultados de clasificación de un GP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gps/1/clasificacion",
+              "host": ["{{baseUrl}}"],
+              "path": ["gps", "1", "clasificacion"]
+            },
+            "description": "Retorna los resultados de la sesión CLASIFICACION (Q1/Q2/Q3) del Gran Premio, ordenados por posición en parrilla."
+          }
+        },
+        {
+          "name": "POST - Crear Gran Premio",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreOficial\": \"Formula 1 Gran Premio de España 2023\",\n  \"numRonda\": 8,\n  \"idTemporada\": 1,\n  \"idVariante\": 1,\n  \"fechaInicio\": \"2023-06-02\",\n  \"fechaFin\": \"2023-06-04\",\n  \"estado\": \"FINALIZADO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gps",
+              "host": ["{{baseUrl}}"],
+              "path": ["gps"]
+            },
+            "description": "Crear un nuevo Gran Premio.\nEstados válidos: PROGRAMADO, EN_CURSO, FINALIZADO, CANCELADO."
+          }
+        },
+        {
+          "name": "PUT - Actualizar Gran Premio",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreOficial\": \"Formula 1 Gulf Air Bahrain Grand Prix 2023\",\n  \"numRonda\": 1,\n  \"idTemporada\": 1,\n  \"idVariante\": 1,\n  \"fechaInicio\": \"2023-03-05\",\n  \"fechaFin\": \"2023-03-05\",\n  \"estado\": \"FINALIZADO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gps/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["gps", "1"]
+            },
+            "description": "Actualizar datos de un Gran Premio existente."
+          }
+        },
+        {
+          "name": "DELETE - Eliminar Gran Premio",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gps/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["gps", "1"]
+            },
+            "description": "Eliminar un Gran Premio. Fallará si tiene sesiones o resultados asociados."
+          }
+        }
+      ]
+    }
+  ]
+}

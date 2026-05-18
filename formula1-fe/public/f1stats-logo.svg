@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" fill="none">
+  <!--
+    F1 mark — inspired by the official F1 logo structure:
+    · Left shape: italic bold "F" with a large concave quarter-circle on the inner corner
+    · Right shape: diagonal slash (the "1")
+    · The negative space between the two shapes forms the numeral "1"
+  -->
+
+  <!-- F shape -->
+  <path
+    d="M 2,37
+       L 10,3
+       L 46,3
+       L 44,12
+       L 17,12
+       Q 10,12 10,21
+       L 37,21
+       L 35,30
+       L 8,30
+       L 5,37
+       Z"
+    fill="#E10600"
+  />
+
+  <!-- 1 slash (diagonal parallelogram) -->
+  <path
+    d="M 52,3
+       L 62,3
+       L 58,37
+       L 48,37
+       Z"
+    fill="#E10600"
+  />
+
+  <!-- Divider -->
+  <rect x="70" y="9" width="1" height="22" fill="rgba(255,255,255,0.18)"/>
+
+  <!-- STATS label -->
+  <text
+    x="77" y="22"
+    font-family="'Titillium Web', Arial, sans-serif"
+    font-weight="900"
+    font-size="13"
+    fill="#FFFFFF"
+    letter-spacing="3"
+    text-anchor="start"
+  >STATS</text>
+
+  <!-- SYSTEM sublabel -->
+  <text
+    x="77" y="33"
+    font-family="'Titillium Web', Arial, sans-serif"
+    font-weight="400"
+    font-size="7"
+    fill="rgba(255,255,255,0.4)"
+    letter-spacing="2.5"
+    text-anchor="start"
+  >SYSTEM</text>
+</svg>

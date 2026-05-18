@@ -1,0 +1,9 @@
+package com.formula1.repository;
+
+import com.formula1.model.entity.ResultadoCarrera;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface ResultadoCarreraRepository extends JpaRepository<ResultadoCarrera, Long> {
+    List<ResultadoCarrera> findBySesionIdSesionOrderByPosicionFinalAsc(Long idSesion);
+}
